@@ -393,6 +393,11 @@ class BackupManager {
     return path.join(documentsDir.path, 'AI_Assistant_Backups');
   }
 
+  /// 获取默认备份目录（公共方法）
+  Future<String> getDefaultBackupDirectory() async {
+    return await _getDefaultBackupPath();
+  }
+
   /// 计算数据校验和
   String _calculateChecksum(Map<String, dynamic> data) {
     final dataString = jsonEncode(data);

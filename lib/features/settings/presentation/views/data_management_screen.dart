@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../providers/data_management_provider.dart';
 import '../../../llm_chat/presentation/providers/chat_provider.dart';
@@ -22,6 +23,8 @@ class DataManagementScreen extends ConsumerStatefulWidget {
 class _DataManagementScreenState extends ConsumerState<DataManagementScreen> {
   bool _isLoading = false;
   bool _autoBackupEnabled = false;
+  String _autoBackupTime = '03:00';
+  String? _autoBackupPath;
 
   @override
   void initState() {
@@ -35,6 +38,8 @@ class _DataManagementScreenState extends ConsumerState<DataManagementScreen> {
       final prefs = await SharedPreferences.getInstance();
       setState(() {
         _autoBackupEnabled = prefs.getBool('auto_backup_enabled') ?? false;
+        _autoBackupTime = prefs.getString('auto_backup_time') ?? '03:00';
+        _autoBackupPath = prefs.getString('auto_backup_path');
       });
     } catch (e) {
       // 处理错误
