@@ -17,6 +17,7 @@ import 'file_attachment_card.dart';
 import 'image_preview_widget.dart';
 import 'dart:ui' as ui;
 import 'package:shimmer/shimmer.dart';
+import '../../../../../shared/theme/chat_text_theme.dart';
 
 /// 消息内容渲染组件
 ///
@@ -315,9 +316,11 @@ class _MessageContentWidgetState extends ConsumerState<MessageContentWidget> {
   /// 构建Markdown样式表
   MarkdownStyleSheet _buildMarkdownStyleSheet(BuildContext context) {
     final theme = Theme.of(context);
-    final textColor = widget.message.isFromUser
-        ? theme.colorScheme.onPrimaryContainer
-        : theme.colorScheme.onSurface;
+    final isFromUser = widget.message.isFromUser;
+    
+    // 使用新的聊天文字颜色系统
+    final chatColors = context.chatTextColors;
+    final textColor = chatColors.messageText(isFromUser);
 
     final bodyFont = GoogleFonts.inter(textStyle: theme.textTheme.bodyMedium);
     final headingFont = GoogleFonts.poppins(
@@ -327,38 +330,38 @@ class _MessageContentWidgetState extends ConsumerState<MessageContentWidget> {
     return MarkdownStyleSheet(
       p: bodyFont.copyWith(color: textColor, height: 1.7, letterSpacing: 0.2),
       h1: headingFont.copyWith(
-        color: textColor,
+        color: chatColors.emphasisText(isFromUser),
         fontWeight: FontWeight.w700,
         fontSize: 28,
         height: 1.4,
       ),
       h2: headingFont.copyWith(
-        color: textColor,
+        color: chatColors.emphasisText(isFromUser),
         fontWeight: FontWeight.w700,
         fontSize: 24,
         height: 1.4,
       ),
       h3: headingFont.copyWith(
-        color: textColor,
+        color: chatColors.emphasisText(isFromUser),
         fontWeight: FontWeight.w700,
         fontSize: 20,
         height: 1.4,
       ),
-      h4: headingFont.copyWith(color: textColor, fontSize: 18),
-      h5: headingFont.copyWith(color: textColor, fontSize: 16),
-      h6: headingFont.copyWith(color: textColor, fontSize: 14),
+      h4: headingFont.copyWith(color: chatColors.emphasisText(isFromUser), fontSize: 18),
+      h5: headingFont.copyWith(color: chatColors.emphasisText(isFromUser), fontSize: 16),
+      h6: headingFont.copyWith(color: chatColors.emphasisText(isFromUser), fontSize: 14),
       blockquote: theme.textTheme.bodyMedium?.copyWith(
-        color: textColor.withValues(alpha: 0.85),
+        color: chatColors.blockquoteText(isFromUser),
       ),
       strong: theme.textTheme.bodyMedium?.copyWith(
-        color: textColor,
+        color: chatColors.emphasisText(isFromUser),
         fontWeight: FontWeight.bold,
       ),
       em: theme.textTheme.bodyMedium?.copyWith(
-        color: textColor,
+        color: chatColors.emphasisText(isFromUser),
       ),
       code: theme.textTheme.bodyMedium?.copyWith(
-        color: textColor,
+        color: chatColors.codeText(isFromUser),
         fontFamily: 'JetBrains Mono, Source Code Pro, monospace',
         fontSize: 13,
         backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'color_theme.dart';
+import 'dialog_theme.dart';
 
 /// 应用主题配置
 /// 基于Material Design 3和现代UI趋势设计
@@ -193,6 +194,9 @@ class AppTheme {
         space: 1,
       ),
 
+      // 对话框主题
+      dialogTheme: DialogThemeConfig.getDialogTheme(colorTheme, Brightness.light),
+
       // 开关主题
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
@@ -274,6 +278,9 @@ class AppTheme {
           side: BorderSide(color: colorScheme.outline, width: 1),
         ),
       ),
+
+      // 对话框主题
+      dialogTheme: DialogThemeConfig.getDialogTheme(colorTheme, Brightness.dark),
     );
   }
 

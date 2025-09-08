@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../theme/app_theme.dart';
+import '../theme/chat_text_theme.dart';
 
 /// 现代化聊天气泡
 class ModernChatBubble extends StatefulWidget {
@@ -202,12 +203,12 @@ class _ModernChatBubbleState extends State<ModernChatBubble>
   }
 
   Widget _buildMessageContent(BuildContext context) {
+    final chatColors = context.chatTextColors;
+    
     return SelectableText(
       widget.message,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: widget.isFromUser
-            ? Colors.white
-            : Theme.of(context).colorScheme.onSurface,
+        color: chatColors.messageText(widget.isFromUser),
         height: 1.4,
       ),
     );

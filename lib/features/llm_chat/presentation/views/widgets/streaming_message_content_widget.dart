@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../domain/entities/chat_message.dart';
 import 'message_content_widget.dart';
 import 'thinking_chain_widget.dart';
+import '../../../../../shared/theme/chat_text_theme.dart';
 
 /// 流式增量渲染的消息组件
 class OptimizedStreamingMessageWidget extends ConsumerStatefulWidget {
@@ -193,11 +194,15 @@ class _OptimizedStreamingMessageWidgetState
 
   TextStyle? _textStyle() {
     final theme = Theme.of(context);
+    final isFromUser = widget.message.isFromUser;
+    
+    // 使用新的聊天文字颜色系统
+    final chatColors = context.chatTextColors;
+    final textColor = chatColors.messageText(isFromUser);
+    
     return GoogleFonts.inter(
       textStyle: theme.textTheme.bodyMedium?.copyWith(
-        color: widget.message.isFromUser
-            ? theme.colorScheme.onPrimaryContainer
-            : theme.colorScheme.onSurface,
+        color: textColor,
         height: 1.7,
         letterSpacing: 0.2,
       ),
